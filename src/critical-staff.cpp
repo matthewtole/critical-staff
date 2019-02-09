@@ -17,6 +17,7 @@
 #include <FastLED.h>
 #include <Chrono.h>
 #include <Button.h>
+#include <ArduinoLog.h>
 #pragma GCC diagnostic pop
 
 #include "crown.h"
@@ -29,6 +30,7 @@ TouchPanel touch_panel = TouchPanel();
 void setup()
 {
 	Serial.begin(9600);
+	Log.begin(LOG_LEVEL_VERBOSE, &Serial);
 	touch_panel.setup();
 	crown.setup();
 	crown.set_color(CHSV(0, 255, 50));

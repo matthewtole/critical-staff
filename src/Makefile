@@ -21,7 +21,7 @@ ARDMK_DIR         = $(PROJECT_DIR)/Arduino-Makefile
 # ARDUINO_DIR       = /Applications/Arduino.app/Contents/Resources/Java
 ### For Arduino IDE 1.6.x
 ARDUINO_DIR       = /Applications/Arduino.app/Contents/Java
-ARDUINO_LIBS = Wire FastLED Chrono Button Logging Adafruit_MPR121
+ARDUINO_LIBS = Wire FastLED Chrono Button Adafruit_MPR121 ArduinoLog
 
 ### USER_LIB_PATH
 ### Path to where the your project's libraries are stored.

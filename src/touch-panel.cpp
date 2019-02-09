@@ -12,11 +12,9 @@
  */
 
 #include <Adafruit_MPR121.h>
-#include <Logging.h>
+#include <ArduinoLog.h>
 
 #include "touch-panel.h"
-
-Log Log;
 
 TouchPanel::TouchPanel()
 {
@@ -27,11 +25,11 @@ void TouchPanel::setup()
 {
 	if (!panel.begin(0x5A))
 	{
-		Log.println(LOG_ERROR, "TouchPanel", "Sensor was not detected");
+		Log.error("TouchPanel :: Failed to connect to the sensor.\r\n");
 	}
 	else
 	{
-		Log.println(LOG_INFO, "TouchPanel", "Sensor was detected.");
+		Log.notice("TouchPanel :: Connected to the sensor.\r\n");
 	}
 }
 
@@ -71,7 +69,7 @@ void TouchPanelPad::set_is_touched(bool touched)
 	{
 		last_released = millis();
 		last_touch_ms = last_released - last_touched;
-		Log.println(LOG_DEBUG, "TouchPanel", String(last_touch_ms));
+		Log.notice("TouchPanel :: %d\r\n", last_touch_ms);
 	}
 }
 

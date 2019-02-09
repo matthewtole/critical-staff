@@ -16,3 +16,6 @@
 [submodule "lib/Adafruit_MPR121"]
 	path = lib/Adafruit_MPR121
 	url = https://github.com/adafruit/Adafruit_MPR121.git
+[submodule "lib/ArduinoLog"]
+	path = lib/ArduinoLog
+	url = https://github.com/thijse/Arduino-Log.git
