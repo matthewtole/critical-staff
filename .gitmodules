@@ -13,3 +13,6 @@
 [submodule "lib/Logging"]
 	path = lib/Logging
 	url = https://github.com/Domi04151309/Arduino-Logging-Library.git
+[submodule "lib/Adafruit_MPR121"]
+	path = lib/Adafruit_MPR121
+	url = https://github.com/adafruit/Adafruit_MPR121.git
