@@ -4,7 +4,7 @@
  * ║  ├┬┘│ │ ││  ├─┤│    ╚═╗ │ ├─┤├┤ ├┤
  * ╚═╝┴└─┴ ┴ ┴└─┘┴ ┴┴─┘  ╚═╝ ┴ ┴ ┴└  └
  * =====================================
- * @file critical-staff.cpp
+ * @file crown.cpp
  * @author Matthew Tole (matthewtole@gmail.com)
  * @brief
  * @version 0.1
@@ -15,31 +15,41 @@
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #include <FastLED.h>
-#include <Chrono.h>
-#include <Button.h>
-#include <ArduinoLog.h>
 #pragma GCC diagnostic pop
 
 #include "crown.h"
 
-Chrono myChrono;
-Crown crown;
-
-void setup()
+Crown::Crown()
 {
-	crown.setup();
 }
 
-void loop()
+void Crown::setup()
 {
-	crown.loop();
+	FastLED.addLeds<NEOPIXEL, PIN_CROWN>(pixels, NUM_FACES * PIXELS_PER_FACE);
+}
 
-	static int h = 0;
-	if (myChrono.hasPassed(15, true))
+void Crown::loop()
+{
+}
+
+void Crown::set_color(CHSV color)
+{
+	for (uint8_t p = 0; p < NUM_FACES * PIXELS_PER_FACE; p += 1)
 	{
-		crown.set_face_color(1, CHSV(h, 255, 100));
-		crown.set_face_color(2, CHSV(h + 50, 255, 100));
-		crown.apply();
-		h += 1;
+		pixels[p] = color;
 	}
+}
+
+void Crown::set_face_color(uint8_t face, CHSV color)
+{
+	uint8_t offset = (face - 1) * PIXELS_PER_FACE;
+	for (uint8_t p = 0; p < PIXELS_PER_FACE; p += 1)
+	{
+		pixels[offset + p] = color;
+	}
+}
+
+void Crown::apply()
+{
+	FastLED.show();
 }
