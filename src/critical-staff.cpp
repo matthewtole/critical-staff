@@ -17,7 +17,6 @@
 #include <FastLED.h>
 #include <Chrono.h>
 #include <Button.h>
-#include <ArduinoLog.h>
 #pragma GCC diagnostic pop
 
 #include "crown.h"

@@ -1,6 +1,6 @@
 [submodule "Arduino-Makefile"]
 	path = Arduino-Makefile
-	url = git@github.com:matthewtole/Arduino-Makefile.git
+	url = https://github.com/SofaPirate/Arduino-Makefile.git
 [submodule "lib/Chrono"]
 	path = lib/Chrono
 	url = https://github.com/SofaPirate/Chrono.git
