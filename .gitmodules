@@ -10,3 +10,6 @@
 [submodule "lib/Button"]
 	path = lib/Button
 	url = https://github.com/madleech/Button.git
+[submodule "lib/Logging"]
+	path = lib/Logging
+	url = https://github.com/Domi04151309/Arduino-Logging-Library.git
