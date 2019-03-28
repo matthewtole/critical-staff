@@ -15,9 +15,11 @@
 #pragma GCC diagnostic ignored "-Wpedantic"
 #pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
 #include <FastLED.h>
+#include <ArduinoLog.h>
 #pragma GCC diagnostic pop
 
 #include "crown.h"
+#include "constants.h"
 
 Crown::Crown()
 {
@@ -30,26 +32,53 @@ void Crown::setup()
 
 void Crown::loop()
 {
-}
-
-void Crown::set_color(CHSV color)
-{
-	for (uint8_t p = 0; p < NUM_FACES * PIXELS_PER_FACE; p += 1)
+	if (pattern != NULL)
 	{
-		pixels[p] = color;
+		pattern->update(pixels);
 	}
-}
-
-void Crown::set_face_color(uint8_t face, CHSV color)
-{
-	uint8_t offset = (face - 1) * PIXELS_PER_FACE;
-	for (uint8_t p = 0; p < PIXELS_PER_FACE; p += 1)
-	{
-		pixels[offset + p] = color;
-	}
+	apply();
 }
 
 void Crown::apply()
 {
 	FastLED.show();
+}
+
+void Crown::set_pattern(CrownPatternName name)
+{
+	for (uint8_t p = 0; p < NUM_FACES * PIXELS_PER_FACE; p += 1)
+	{
+		pixels[p] = CHSV(0, 0, 0);
+	}
+
+	if (pattern)
+	{
+		delete pattern;
+		pattern = NULL;
+	}
+	switch (name)
+	{
+	case PULSE_WHITE:
+		pattern = new CrownPatternPulseWhite();
+		break;
+	case RAINBOW_CHASE_PULSE:
+		pattern = new CrownPatternRainbowPulse();
+		break;
+	case RAINBOW_CHASE:
+		pattern = new CrownPatternRainbowChase();
+		break;
+	case COLOR_ROWS:
+		pattern = new CrownPatternColorRows();
+		break;
+	case PIXEL_FLASH:
+		pattern = new CrownPatternFaceFlash();
+		break;
+	case FACE_FLASH:
+		pattern = new CrownPatternPixelFlash();
+		break;
+	case OFF:
+	case EXPERIMENT:
+	default:
+		break;
+	}
 }

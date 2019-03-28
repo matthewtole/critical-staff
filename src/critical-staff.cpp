@@ -22,39 +22,55 @@
 
 #include "crown.h"
 #include "touch-panel.h"
+#include "constants.h"
 
 Chrono myChrono = Chrono();
 Crown crown = Crown();
 TouchPanel touch_panel = TouchPanel();
+Button button = Button(2);
+uint8_t experiment_number = 0;
 
 void setup()
 {
+	pinMode(2, INPUT_PULLUP);
 	Serial.begin(9600);
 	Log.begin(LOG_LEVEL_VERBOSE, &Serial);
 	touch_panel.setup();
 	crown.setup();
-	crown.set_color(CHSV(0, 255, 50));
-	crown.apply();
 }
-
-bool running = false;
 
 void loop()
 {
 	crown.loop();
 	touch_panel.loop();
+	FastLED.setBrightness(analogRead(14) / 4);
 
-	if (touch_panel.was_tapped(9))
+	if (button.pressed())
 	{
-		running = !running;
-	}
-
-	static int h = 0;
-	if (myChrono.hasPassed(10, true) && running)
-	{
-		crown.set_face_color(1, CHSV(h, 255, 50));
-		crown.set_face_color(2, CHSV(h + 50, 255, 50));
-		crown.apply();
-		h += 1;
+		experiment_number = (experiment_number + 1) % 7;
+		switch (experiment_number)
+		{
+		case 0:
+			crown.set_pattern(OFF);
+			break;
+		case 1:
+			crown.set_pattern(PULSE_WHITE);
+			break;
+		case 2:
+			crown.set_pattern(RAINBOW_CHASE_PULSE);
+			break;
+		case 3:
+			crown.set_pattern(RAINBOW_CHASE);
+			break;
+		case 4:
+			crown.set_pattern(COLOR_ROWS);
+			break;
+		case 5:
+			crown.set_pattern(FACE_FLASH);
+			break;
+		case 6:
+			crown.set_pattern(PIXEL_FLASH);
+			break;
+		}
 	}
 }
